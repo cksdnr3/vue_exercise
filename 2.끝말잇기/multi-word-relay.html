@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>다중끝말잇기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!--    컴포넌트는 재사용하기 위해 만들어진 것 하지만 틀은 같지만 내용은 약간 다른 것을-->
+<!--    만들고 싶다면 props로 데이터를 처리할 수 있다.-->
+    <word-relay start-word="제로초"></word-relay>
+    <word-relay start-word="키보드"></word-relay>
+    <word-relay start-word="알렌느"></word-relay>
+</div>
+</body>
+<script>
+    // 이 컴포넌트는 global(전역) 컴포넌트라고 부른다.
+    Vue.component('word-relay', {
+        <!--          템플릿 최상위는 div태그를 반드시 한번 감싸줘야한다.-->
+        template: `
+
+          <div>
+              <div>제시어: {{ word }}</div>
+              <form v-on:submit="onSubmitForm">
+                <input type="text" v-model="answer"/>
+                <button type="submit">입력</button>
+              </form>
+              <div>{{ result }}</div>
+          </div>
+        `,
+        // component는 여러번 사용하기 위해만드는 것 그렇기 때문에 각각 사용될 때마다
+        // 데이터들은 다른 값을 가져야함 그렇기 때문에 함수 식으로 만들어
+        // 컴포넌트가 사용될 때마다 데이터들을 리턴하는 방식으로 만들어야한다.
+        data() {
+            return {
+                word: this.startWord,
+                result: '',
+                answer: '',
+            }
+        },
+        props: {
+            startWord: {
+                type: String
+            }
+        },
+        methods: {
+            onSubmitForm(e) {
+                e.preventDefault();
+
+                if (this.answer[0] === this.word[this.word.length - 1]) {
+                    this.result = "정답";
+                    this.word = this.answer;
+                } else {
+                    this.result = "땡"
+                }
+                this.answer = "";
+            }
+        }
+    })
+</script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+        },
+    });
+</script>
+</html>

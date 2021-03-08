@@ -1,0 +1,19 @@
+// 모듈 시스템 문법이다.
+// 이전에 npm 으로 다운받은 vue를 가져오는 것이다.
+// package.json에 정의되어 있음
+import Vue from 'vue';
+
+
+
+// 임포트로 각 컴포넌트들을 모두 불러와야한다.
+// 현재 .vue 파일이 js가 아니기 때문에 에러가난다. config에서 rules에서 처리를 해줘야함.
+// config에 resolve에 extenstion에 정의된 확장자 명은 제거하고 사용가능!
+// 없다면 사용해줘야함.
+import NumberBaseBall from './NumberBaseball.vue';
+
+
+
+// vue가 총괄 통제할 태그의 id를 $mount인자에 적는다.
+// 현재 메인 컴포넌트를 NumberBaseball.vue를 사용하고 있기 때문에
+// 뷰 인스턴스에 인자로 보내준다.
+new Vue(NumberBaseBall).$mount('#app');

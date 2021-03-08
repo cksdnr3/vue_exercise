@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>끝말잇기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>제시어: {{ word }}</div>
+    <form v-on:submit="onSubmitForm">
+        <input type="text" v-model="answer"/>
+        <button type="submit">입력</button>
+    </form>
+    <div>{{ result }}</div>
+</div>
+</body>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            word: '마우스',
+            result: '',
+            answer: '',
+        },
+        methods: {
+            onSubmitForm(e) {
+                e.preventDefault();
+
+                if (this.answer[0] === this.word[this.word.length - 1]) {
+                    this.result = "정답";
+                    this.word = this.answer;
+                } else {
+                    this.result = "땡"
+                }
+                this.answer = "";
+            }
+        },
+    });
+</script>
+</html>
