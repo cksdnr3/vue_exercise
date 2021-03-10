@@ -53,6 +53,30 @@ document.querySelector('#exec').addEventListener('click', function() {
                 }
 
             });
+            td.addEventListener('click', function (e) {
+                var parentTr = e.currentTarget.parentNode;
+                var parentTbody = e.currentTarget.parentNode.parentNode;
+                var rowIdx = Array.prototype.indexOf.call(parentTbody.children, parentTr);
+                var colIdx = Array.prototype.indexOf.call(parentTr.children, e.currentTarget);
+
+                if (dataSet[rowIdx,colIdx] === 'X') {
+                    e.currentTarget.textContent = '펑';
+                } else {
+                    var aroundMine = [
+                        dataSet[rowIdx][colIdx - 1], dataSet[rowIdx][colIdx + 1],
+                    ].filter(function (v) {
+                        return v === 'X'
+                    });
+                    if (dataSet[rowIdx - 1]) {
+                        aroundMine = aroundMine.concat(dataSet[rowIdx - 1][colIdx - 1], dataSet[rowIdx - 1][colIdx], dataSet[rowIdx - 1][colIdx + 1]);
+                    }
+                    if (dataSet[rowIdx + 1]) {
+                        aroundMine = aroundMine.concat(dataSet[rowIdx + 1][colIdx - 1], dataSet[rowIdx + 1][colIdx], dataSet[rowIdx + 1][colIdx + 1]);
+                    }
+
+                    e.currentTarget.textContent = aroundMine.length;
+                }
+            })
             tr.appendChild(td);
         }
         tbody.appendChild(tr);
